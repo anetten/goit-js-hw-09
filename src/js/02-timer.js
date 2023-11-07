@@ -15,22 +15,22 @@ refs.startBtn.disabled = true;
 let selectedDate;
 let countdownInterval;
 
-const options = {
+flatpickr(refs.dateTime, {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  onClose(selectedDates) {
-    if (selectedDates.getTime() <= Date.now()) {
+  onClose([selectedDates]) {
+    if (selectedDates.getTime() < Date.now()) {
       Notiflix.Notify.warning('Please choose a date in the future');
     } else {
       refs.startBtn.disabled = false;
       selectedDate = selectedDates.getTime();
     }
   },
-};
+});
 
-function timerTime() {
+function timerStart() {
   countdownInterval = setInterval(() => {
     const currentData = Date.now();
     const diff = selectedDate - currentData;
@@ -61,4 +61,4 @@ function convertMs(time) {
   return { days, hours, minutes, seconds };
 }
 
-refs.startBtn.addEventListener('click', flatpickr);
+refs.startBtn.addEventListener('click', timerStart);

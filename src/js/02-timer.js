@@ -26,6 +26,7 @@ flatpickr(refs.dateTime, {
     } else {
       refs.startBtn.disabled = false;
       selectedDate = selectedDates.getTime();
+      timerStart();
     }
   },
 });
@@ -38,7 +39,7 @@ function timerStart() {
       refs.startBtn.disabled = true;
       refs.dateTime.disabled = false;
       clearInterval(countdownInterval);
-      return;
+      convertMs(0);
     } else {
       refs.startBtn.disabled = false;
       refs.dateTime.disabled = true;
@@ -48,17 +49,23 @@ function timerStart() {
 }
 
 function convertMs(time) {
-  const second = 1000;
-  const minute = second * 60;
-  const hour = minute * 60;
-  const day = hour * 24;
-
   const days = Math.floor(time / (1000 * 60 * 60 * 24));
   const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((time % (1000 * 60)) / 1000);
 
-  return { days, hours, minutes, seconds };
+  refs.dataDays.textContent = addLeadingZero(days);
+  refs.dataHours.textContent = addLeadingZero(hours);
+  refs.dataMinutes.textContent = addLeadingZero(minutes);
+  refs.dataSeconds.textContent = addLeadingZero(seconds);
 }
 
-refs.startBtn.addEventListener('click', timerStart);
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
+}
+
+refs.startBtn.addEventListener('click', () => {
+  if (selectedDate) {
+    timerStart();
+  }
+});

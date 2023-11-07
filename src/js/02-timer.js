@@ -61,4 +61,4 @@ function convertMs(time) {
   return { days, hours, minutes, seconds };
 }
 
-refs.startBtn.addEventListener('click');
+refs.startBtn.addEventListener('click', flatpickr);

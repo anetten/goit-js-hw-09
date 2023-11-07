@@ -23,15 +23,15 @@ form.addEventListener('submit', function (event) {
   }
 });
 
-function createPromise(position, currentDelay) {
+function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const shouldResolve = Math.random() > 0.3;
       if (shouldResolve) {
-        resolve({ position, delay: currentDelay });
+        resolve({ position, delay: delay });
       } else {
-        reject({ position, delay: currentDelay });
+        reject({ position, delay: delay });
       }
-    }, currentDelay);
+    }, delay);
   });
 }
